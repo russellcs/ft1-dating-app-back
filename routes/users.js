@@ -3,7 +3,6 @@ const app = express.Router();
 const queries = require("../mysql/queriesUsers");
 const pConnection = require("../mysql/connection");
 const fs = require("fs");
-
 // add new user (email only)
 app.post("/", async (req, res) => {
   try {
