@@ -15,7 +15,7 @@ function pConnection(query) {
     connection.query(query, (err, results) => {
       if (err) {
         console.log(err);
-        reject();
+        reject(err);
       }
 
       resolve(results);
