@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 07, 2022 at 02:34 PM
+-- Generation Time: Apr 07, 2022 at 03:24 PM
 -- Server version: 10.4.24-MariaDB
 -- PHP Version: 7.4.28
 
@@ -77,6 +77,20 @@ CREATE TABLE `likes` (
 CREATE TABLE `log_login` (
   `id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL COMMENT 'ID from users table',
+  `entry_date` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `messages`
+--
+
+CREATE TABLE `messages` (
+  `id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `foreign_id` int(11) NOT NULL,
+  `content` varchar(512) NOT NULL,
   `entry_date` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -288,6 +302,12 @@ ALTER TABLE `log_login`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `messages`
+--
+ALTER TABLE `messages`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `preferences`
 --
 ALTER TABLE `preferences`
@@ -374,6 +394,12 @@ ALTER TABLE `likes`
 -- AUTO_INCREMENT for table `log_login`
 --
 ALTER TABLE `log_login`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `messages`
+--
+ALTER TABLE `messages`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --

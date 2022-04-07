@@ -4,3 +4,4 @@ module.exports = {
                     VALUES ("${email}");`;
   },
 };
+
