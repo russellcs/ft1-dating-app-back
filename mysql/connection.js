@@ -2,7 +2,7 @@ const mysql = require("mysql"); //driver
 
 const connection = mysql.createConnection({
   database: process.env.DATABASE,
-  user: process.env.USER,
+  user: process.env.DBUSER,
   password: process.env.PASSWORD,
   host: process.env.HOST,
   port: process.env.PORT,
