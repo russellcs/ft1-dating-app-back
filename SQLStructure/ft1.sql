@@ -2,9 +2,9 @@
 -- version 5.1.3
 -- https://www.phpmyadmin.net/
 --
--- Host: localhost
--- Generation Time: Apr 07, 2022 at 01:20 PM
--- Server version: 10.4.21-MariaDB
+-- Host: 127.0.0.1
+-- Generation Time: Apr 07, 2022 at 02:34 PM
+-- Server version: 10.4.24-MariaDB
 -- PHP Version: 7.4.28
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
@@ -18,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `find_sparks`
+-- Database: `ft1`
 --
 
 -- --------------------------------------------------------
@@ -173,7 +173,8 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `email`, `password`, `type`, `status`, `entry_date`) VALUES
-(1, 'a@b.c', '', 2, 1, '2022-04-07 10:51:24');
+(8, 'a@b.c', '', 2, 1, '2022-04-07 12:23:21'),
+(10, '3jkh', '', 2, 1, '2022-04-07 12:25:35');
 
 -- --------------------------------------------------------
 
@@ -314,7 +315,8 @@ ALTER TABLE `tokens`
 -- Indexes for table `users`
 --
 ALTER TABLE `users`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `email` (`email`);
 
 --
 -- Indexes for table `users_preferences_ages`
@@ -402,7 +404,7 @@ ALTER TABLE `tokens`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'user ID', AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'user ID', AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT for table `users_preferences_ages`

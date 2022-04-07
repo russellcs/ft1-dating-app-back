@@ -1,16 +1,16 @@
 const mysql = require("mysql"); //driver
 
 const connection = mysql.createConnection({
-  database: process.env.DATABASE,
+  database: process.env.DBDATABASE,
   user: process.env.DBUSER,
-  password: process.env.PASSWORD,
-  host: process.env.HOST,
-  port: process.env.PORT,
+  password: process.env.DBPASSWORD,
+  host: process.env.DBHOST,
+  port: process.env.DBPORT,
 });
 
 connection.connect();
 
-function asyncMySQL(query) {
+function pConnection(query) {
   return new Promise((resolve, reject) => {
     connection.query(query, (err, results) => {
       if (err) {
@@ -23,4 +23,4 @@ function asyncMySQL(query) {
   });
 }
 
-module.exports = asyncMySQL;
+module.exports = pConnection;
