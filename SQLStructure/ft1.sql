@@ -2,9 +2,9 @@
 -- version 5.1.3
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1
--- Generation Time: Apr 07, 2022 at 05:43 PM
--- Server version: 10.4.24-MariaDB
+-- Host: localhost
+-- Generation Time: Apr 08, 2022 at 11:53 AM
+-- Server version: 10.4.21-MariaDB
 -- PHP Version: 7.4.28
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
@@ -18,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `ft1`
+-- Database: `ft2`
 --
 
 -- --------------------------------------------------------
@@ -146,7 +146,7 @@ CREATE TABLE `tokens` (
 CREATE TABLE `users` (
   `id` int(11) NOT NULL COMMENT 'user ID',
   `email` varchar(331) NOT NULL,
-  `password` varchar(32) NOT NULL,
+  `password` varchar(32) NOT NULL DEFAULT '',
   `type` tinyint(1) NOT NULL DEFAULT 2 COMMENT '0=admin\r\n1=moderator\r\n2=customer',
   `status` tinyint(1) NOT NULL DEFAULT 1 COMMENT 'is user suspended. 0=suspended',
   `entry_date` timestamp NOT NULL DEFAULT current_timestamp() COMMENT 'Date of creation'
@@ -187,7 +187,7 @@ CREATE TABLE `users_preferences_heights` (
   `id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL,
   `min_height` tinyint(4) NOT NULL,
-  `max_height` tinyint(4) NOT NULL
+  `max_height` smallint(4) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -211,7 +211,6 @@ CREATE TABLE `users_preferences_religions` (
 CREATE TABLE `user_details` (
   `id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL,
-  `selfie` varchar(128) NOT NULL COMMENT 'URL of the selfie',
   `first_name` varchar(32) NOT NULL,
   `last_name` varchar(32) NOT NULL,
   `dob` date NOT NULL,
@@ -247,8 +246,7 @@ ALTER TABLE `genders`
 -- Indexes for table `likes`
 --
 ALTER TABLE `likes`
-  ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `likes_combination` (`user_id`,`foreign_id`);
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `log_login`
@@ -278,8 +276,7 @@ ALTER TABLE `religions`
 -- Indexes for table `seen`
 --
 ALTER TABLE `seen`
-  ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `seen_combination` (`user_id`,`foreign_id`);
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `tokens`
