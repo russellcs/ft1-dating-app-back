@@ -7,6 +7,8 @@ const pConnection = require("../mysql/connection");
     - add to likes table
 
     - pull all users - stitching data back together across lots of tables
+        -- register. jsx -stevens code backwards
+
 */
 
 app.post("/seen", async(req, res) => {
