@@ -29,15 +29,13 @@ app.post("/", async (req, res) => {
     await pConnection(queries.setUserPrefHeight(req.body, result.insertId));
     // sets user religion preferences
     await pConnection(queries.setUserPrefReligion(req.body, result.insertId));
-    console.log(result.insertId);
     res.send({ status: 1 });
   } catch (error) {
     res.send({ status: 0, error: "Database refused to insert a new user" });
   }
 
   /* queries users
-      - log in 
-      - log out
+      - log out // This needs it's own table?
 */
 });
 
