@@ -19,6 +19,7 @@ module.exports = {
 	getUserMessages: function (user_id) {
 		return `SELECT content, entry_date
               FROM messages
-                WHERE user_id = ${user_id};`;
+                WHERE user_id = ${user_id}
+                  ORDER BY entry_date DESC;`;
 	},
 };

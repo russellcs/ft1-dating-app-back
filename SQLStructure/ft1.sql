@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Apr 08, 2022 at 11:53 AM
+-- Generation Time: Apr 08, 2022 at 12:31 PM
 -- Server version: 10.4.21-MariaDB
 -- PHP Version: 7.4.28
 
@@ -18,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `ft2`
+-- Database: `ft1`
 --
 
 -- --------------------------------------------------------
@@ -234,7 +234,8 @@ CREATE TABLE `user_details` (
 -- Indexes for table `blocked`
 --
 ALTER TABLE `blocked`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `blocked_combination` (`user_id`,`foreign_id`);
 
 --
 -- Indexes for table `genders`
@@ -246,7 +247,8 @@ ALTER TABLE `genders`
 -- Indexes for table `likes`
 --
 ALTER TABLE `likes`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `likes_combination` (`user_id`,`foreign_id`);
 
 --
 -- Indexes for table `log_login`
@@ -276,7 +278,8 @@ ALTER TABLE `religions`
 -- Indexes for table `seen`
 --
 ALTER TABLE `seen`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `seen_combination` (`user_id`,`foreign_id`);
 
 --
 -- Indexes for table `tokens`
