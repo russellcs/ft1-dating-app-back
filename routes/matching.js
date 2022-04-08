@@ -12,12 +12,13 @@ const pConnection = require("../mysql/connection");
 */
 
 app.post("/seen", async(req, res) => {
+   console.log(req.body)
     try {        
         let result = await pConnection(queries.addToSeen(req.body.user_id, req.body.foreign_id));
         console.log(result)
         res.send({status: 1 })
     } catch (error) {
-        console.log("sqlerror", error.sqlMessage)
+        // console.log("sqlerror", error.sqlMessage)
         res.send({ status: 0, error: "Database refused to add to seen list" });
     }
 })
