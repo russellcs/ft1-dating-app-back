@@ -30,7 +30,27 @@ app.delete("/:id", async (req, res) => {
 });
 
 // block a user
+app.post("/blocked", async (req, res) => {
+	try {
+		const result = await pConnection(
+			queriesMessages.blockUser(req.body.user_id, req.body.foreign_id)
+		);
+		res.send({ status: 1 });
+	} catch (error) {
+		res.send({ status: 0 });
+	}
+});
 
 // pull all messages for a user
+app.get("/:user_id", async (req, res) => {
+	try {
+		const result = await pConnection(
+			queriesMessages.getUserMessages(req.params.user_id)
+		);
+		res.send({ status: 1, payload: result });
+	} catch (error) {
+		res.send({ status: 0 });
+	}
+});
 
 module.exports = app;
