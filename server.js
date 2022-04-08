@@ -11,13 +11,12 @@ app.use(bodyParser.json());
 
 // routes
 app.get("/", () => {
-  console.log("The server received a request")
-})
+  console.log("The server received a request");
+});
 
-app.use("/users", require("./routes/users"))
-app.use("/messages", require("./routes/messages"))
-app.use("/matching", require("./routes/matching"))
-
+app.use("/users", require("./routes/users"));
+app.use("/messages", require("./routes/messages"));
+app.use("/matching", require("./routes/matching"));
 
 //server on
 const port = process.env.PORT || 6001;

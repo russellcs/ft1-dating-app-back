@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 07, 2022 at 03:24 PM
+-- Generation Time: Apr 07, 2022 at 05:43 PM
 -- Server version: 10.4.24-MariaDB
 -- PHP Version: 7.4.28
 
@@ -43,17 +43,6 @@ CREATE TABLE `genders` (
   `id` int(11) NOT NULL,
   `name` varchar(16) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data for table `genders`
---
-
-INSERT INTO `genders` (`id`, `name`) VALUES
-(1, 'Female'),
-(2, 'Male'),
-(3, 'Intersex'),
-(4, 'Transgender'),
-(5, 'Non-binary');
 
 -- --------------------------------------------------------
 
@@ -122,25 +111,6 @@ CREATE TABLE `religions` (
   `name` varchar(32) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
---
--- Dumping data for table `religions`
---
-
-INSERT INTO `religions` (`id`, `name`) VALUES
-(1, 'Prefer not to say'),
-(2, 'African Traditional'),
-(3, 'Agnostic'),
-(4, 'Atheist'),
-(5, 'Buddhism'),
-(6, 'Chinese Traditional'),
-(7, 'Christianity'),
-(8, 'Hinduism'),
-(9, 'Islam'),
-(10, 'Judaism'),
-(11, 'Sikhism'),
-(12, 'Spiritism'),
-(13, 'Other');
-
 -- --------------------------------------------------------
 
 --
@@ -181,14 +151,6 @@ CREATE TABLE `users` (
   `status` tinyint(1) NOT NULL DEFAULT 1 COMMENT 'is user suspended. 0=suspended',
   `entry_date` timestamp NOT NULL DEFAULT current_timestamp() COMMENT 'Date of creation'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data for table `users`
---
-
-INSERT INTO `users` (`id`, `email`, `password`, `type`, `status`, `entry_date`) VALUES
-(8, 'a@b.c', '', 2, 1, '2022-04-07 12:23:21'),
-(10, '3jkh', '', 2, 1, '2022-04-07 12:25:35');
 
 -- --------------------------------------------------------
 
@@ -240,14 +202,6 @@ CREATE TABLE `users_preferences_religions` (
   `religion_id` tinyint(4) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
---
--- Dumping data for table `users_preferences_religions`
---
-
-INSERT INTO `users_preferences_religions` (`id`, `user_id`, `religion_id`) VALUES
-(1, 1, 3),
-(2, 1, 6);
-
 -- --------------------------------------------------------
 
 --
@@ -293,7 +247,8 @@ ALTER TABLE `genders`
 -- Indexes for table `likes`
 --
 ALTER TABLE `likes`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `likes_combination` (`user_id`,`foreign_id`);
 
 --
 -- Indexes for table `log_login`
@@ -323,7 +278,8 @@ ALTER TABLE `religions`
 -- Indexes for table `seen`
 --
 ALTER TABLE `seen`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `seen_combination` (`user_id`,`foreign_id`);
 
 --
 -- Indexes for table `tokens`
@@ -382,7 +338,7 @@ ALTER TABLE `blocked`
 -- AUTO_INCREMENT for table `genders`
 --
 ALTER TABLE `genders`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `likes`
@@ -412,7 +368,7 @@ ALTER TABLE `preferences`
 -- AUTO_INCREMENT for table `religions`
 --
 ALTER TABLE `religions`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `seen`
@@ -430,7 +386,7 @@ ALTER TABLE `tokens`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'user ID', AUTO_INCREMENT=13;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'user ID';
 
 --
 -- AUTO_INCREMENT for table `users_preferences_ages`
@@ -454,7 +410,7 @@ ALTER TABLE `users_preferences_heights`
 -- AUTO_INCREMENT for table `users_preferences_religions`
 --
 ALTER TABLE `users_preferences_religions`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `user_details`
