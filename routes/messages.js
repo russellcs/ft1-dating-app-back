@@ -18,10 +18,10 @@ app.post("/", async (req, res) => {
 });
 
 // delete a message
-app.delete("/:id", async (req, res) => {
+app.delete("/:messageId", async (req, res) => {
 	try {
 		const result = await pConnection(
-			queriesMessages.deleteMessage(req.params.id)
+			queriesMessages.deleteMessage(req.params.messageId)
 		);
 		res.send({ status: 1 });
 	} catch (error) {
@@ -37,7 +37,7 @@ app.post("/blocked", async (req, res) => {
 		);
 		res.send({ status: 1 });
 	} catch (error) {
-		res.send({ status: 0 });
+		res.send({ status: 0, error: "Sorry you've already blocked this person" });
 	}
 });
 
