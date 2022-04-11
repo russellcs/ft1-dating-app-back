@@ -3,9 +3,15 @@ const app = express.Router();
 const queries = require("../mysql/queriesUsers");
 const pConnection = require("../mysql/connection");
 const fs = require("fs");
+// const sendEmail = require("../email/sIBSDK");
+const sendEmail = require("../email/nodeMailer");
+
 // add new user (email only)
 app.post("/", async (req, res) => {
   console.log(req.body);
+
+  sendEmail(req.body.email, "Welcome new user", "Thanks for joining us!");
+
   try {
     //adds to users table
     const result = await pConnection(

@@ -1,17 +1,16 @@
 const mysql = require("mysql"); //driver
 
 const connection = mysql.createConnection({
-	database: process.env.DBDATABASE,
-	user: process.env.DBUSER,
-	password: process.env.DBPASSWORD,
-	host: process.env.DBHOST,
-	port: process.env.DBPORT,
+  database: "findspar_ks",
+  user: "findspar_ks",
+  password: "74geIRyC:1]2pY",
+  host: "findsparks.uk",
+  port: "3306",
 });
-console.log(process.env.DBDATABASE);
+
 connection.connect();
 
 function pConnection(query) {
-
   return new Promise((resolve, reject) => {
     connection.query(query, (err, results) => {
       if (err) {
@@ -19,9 +18,9 @@ function pConnection(query) {
         reject(err);
       }
 
-			resolve(results);
-		});
-	});
+      resolve(results);
+    });
+  });
 }
 
 module.exports = pConnection;
