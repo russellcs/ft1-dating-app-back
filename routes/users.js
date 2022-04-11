@@ -26,10 +26,26 @@ app.post("/", async (req, res) => {
       pConnection(queries.setUserPrefGender(gender, result.insertId));
     });
     //sets user height preferences
-    /// NOTE I HAVE CHANGED max_height type to SMALLINT
     pConnection(
       queries.setUserPrefHeight(req.body.preferences.height, result.insertId)
     );
+    // stores a selfie
+    let base64Data = req.body.personalDetails.selfie.replace(
+      /^data:image\/jpeg;base64,/,
+      ""
+    );
+    base64Data += base64Data.replace("+", " ");
+    binaryData = Buffer.from(base64Data, "base64").toString("binary");
+
+    fs.writeFile(
+      `./userImages/${result.insertId}.jpg`,
+      binaryData,
+      "binary",
+      function (err) {
+        console.log(err); // writes out file without error, but it's not a valid image
+      }
+    );
+
     res.send({ status: 1 });
   } catch (error) {
     res.send({ status: 0, error: "Database refused to insert a new user" });
@@ -40,19 +56,19 @@ app.post("/", async (req, res) => {
 });
 
 //store a selfie
-app.post("/selfie", (req, res) => {
-  let base64Data = req.body.selfie.replace(/^data:image\/jpeg;base64,/, "");
-  base64Data += base64Data.replace("+", " ");
-  binaryData = Buffer.from(base64Data, "base64").toString("binary");
+// app.post("/selfie", (req, res) => {
+//   let base64Data = req.body.selfie.replace(/^data:image\/jpeg;base64,/, "");
+//   base64Data += base64Data.replace("+", " ");
+//   binaryData = Buffer.from(base64Data, "base64").toString("binary");
 
-  fs.writeFile(
-    `./userImages/${req.body.user_id}.jpg`, /// this userId doesn't exist
-    binaryData,
-    "binary",
-    function (err) {
-      console.log(err); // writes out file without error, but it's not a valid image
-    }
-  );
-});
+//   fs.writeFile(
+//     `./userImages/${req.body.user_id}.jpg`,
+//     binaryData,
+//     "binary",
+//     function (err) {
+//       console.log(err); // writes out file without error, but it's not a valid image
+//     }
+//   );
+// });
 
 module.exports = app;
