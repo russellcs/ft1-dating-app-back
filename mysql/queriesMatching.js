@@ -53,8 +53,8 @@ module.exports = {
                 users_preferences_ages ON users_preferences_heights.user_id = users_preferences_ages.user_id
             JOIN 
                 preferences ON users_preferences_ages.user_id = preferences.user_id
-            WHERE
-                user_details.user_id = ${user_id};`;
+           -- WHERE
+           --     user_details.user_id = ${user_id};`;
   },
 
   //   pullUserPreferences: function (user_id) {
@@ -82,6 +82,5 @@ module.exports = {
             WHERE user_id = ${user_id};`;
   },
 };
-
 
 // module.exports = formatData;

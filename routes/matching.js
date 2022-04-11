@@ -38,11 +38,13 @@ app.post("/likes", async (req, res) => {
 });
 
 app.get("/:user_id", async (req, res) => {
+  console.log("back end called!");
   try {
     const personalDetails = await pConnection(
+      //loop over results and create giant array
       queriesMatching.pullUserDetails(req.params.user_id)
     );
-
+    console.log(queriesMatching.pullUserDetails(req.params.user_id));
     // const preferences = await pConnection(
     //   queriesMatching.pullUserPreferences(req.params.user_id)
     // );
