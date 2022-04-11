@@ -1,11 +1,11 @@
 const mysql = require("mysql"); //driver
 
 const connection = mysql.createConnection({
-  database: "findspar_ks",
-  user: "findspar_ks",
-  password: "74geIRyC:1]2pY",
-  host: "findsparks.uk",
-  port: "3306",
+  database: process.env.DBDATABASE,
+  user: process.env.DBUSER,
+  password: process.env.DBPASSWORD,
+  host: process.env.DBHOST,
+  port: process.env.DBPORT,
 });
 
 connection.connect();
