@@ -12,7 +12,7 @@ app.use(cors());
 
 // routes
 app.get("/", () => {
-	console.log("The server received a request");
+  console.log("The server received a request");
 });
 
 app.use("/users", require("./routes/users"));
@@ -22,5 +22,5 @@ app.use("/matching", require("./routes/matching"));
 //server on
 const port = process.env.PORT || 6001;
 app.listen(port, () => {
-	console.log("The Server is running on port:", port);
+  console.log("The Server is running on port:", port);
 });

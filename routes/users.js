@@ -10,7 +10,7 @@ const sendEmail = require("../email/nodeMailer");
 app.post("/", async (req, res) => {
   console.log(req.body);
 
-  sendEmail(req.body.email, "Welcome new user", "Thanks for joining us!");
+  // sendEmail(req.body.email, "Welcome new user", "Thanks for joining us!"); //commented out to stop email function
 
   try {
     //adds to users table
