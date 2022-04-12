@@ -54,14 +54,9 @@ module.exports = {
             JOIN 
                 preferences ON users_preferences_ages.user_id = preferences.user_id
            -- WHERE
-           --     user_details.user_id = ${user_id};`;
+                -- user_details.user_id = ${user_id}
+                ;`;
   },
-
-  //   pullUserPreferences: function (user_id) {
-  //     return `SELECT lifestyle_marriage, lifestyle_casual, lifestyle_open_to_kids, kids_accepted
-  //               FROM preferences
-  //                   WHERE user_id = ${user_id};`;
-  //   },
 
   getAcceptedGenders: function (user_id) {
     return `SELECT 
@@ -83,4 +78,3 @@ module.exports = {
   },
 };
 
-// module.exports = formatData;
