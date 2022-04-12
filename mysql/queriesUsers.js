@@ -1,9 +1,9 @@
 module.exports = {
-  checkUserAndPassword: function (email, password) {
+  checkUserAndPassword: function () {
     console.log("function called");
     return `SELECT count(*) AS count, id AS userId FROM users 
-              WHERE email = "${email}" 
-                AND password = "${password}";`;
+              WHERE email LIKE ? 
+                AND password LIKE ?;`;
   },
   setUserToken: function (userId, token) {
     return `INSERT INTO tokens (user_id, token) VALUES ("${userId}", "${token}");`;

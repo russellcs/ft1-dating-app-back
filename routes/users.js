@@ -63,9 +63,15 @@ app.post("/", async (req, res) => {
 });
 
 app.post("/login", async (req, res) => {
-  const userResult = await pConnection(
-    queries.checkUserAndPassword(req.body.email, req.body.password)
-  );
+  //prevent hackers
+  if (req.body.password.includes("%")) res.send("Hack attempt detected!");
+
+  const params = [req.body.email, req.body.password];
+
+  const userResult = await pConnection(queries.checkUserAndPassword(), params);
+
+  console.log(queries.checkUserAndPassword());
+  console.log(params);
 
   if (userResult[0].count > 0) {
     const token = utils.getUniqueId(128);
