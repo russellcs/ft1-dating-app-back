@@ -3,22 +3,16 @@ const app = express.Router();
 const queries = require("../mysql/queriesMatching");
 const pConnection = require("../mysql/connection");
 const queriesMatching = require("../mysql/queriesMatching");
+const utils = require("../utils.js")
 
-/*  - add something to seen array
-    - add to likes table
-
-    - pull all users - stitching data back together across lots of tables
-        -- register. jsx -stevens code backwards
-
-*/
 
 app.post("/seen", async (req, res) => {
-  console.log(req.body);
+  // console.log(req.body);
   try {
     let result = await pConnection(
       queries.addToSeen(req.body.user_id, req.body.foreign_id)
     );
-    console.log(result);
+    // console.log(result);
     res.send({ status: 1 });
   } catch (error) {
     // console.log("sqlerror", error.sqlMessage)
@@ -44,7 +38,10 @@ app.get("/:user_id", async (req, res) => {
       queriesMatching.pullUserDetails(req.params.user_id)
     );
 
-    //loop over results and create giant array
+    
+utils.formattedData
+
+    //loop over results, format and create users array
     const formattedDataArray = [];
 
     for (let i = 0; i < personalDetails.length; i++) {
@@ -81,7 +78,9 @@ app.get("/:user_id", async (req, res) => {
           religion: Number(userDetails.religion),
           height: Number(userDetails.height),
           gender: Number(userDetails.gender),
-          kidsAccepted: Number(userDetails.kids_accepted),
+          // This is a mistake? Kid_accepted?
+  //QUERY ACCEPTED KID INPUT HERE
+          // kidsAccepted: Number(userDetails.kids_accepted),
           smokers: Number(userDetails.smoker),
         },
         preferences: {
@@ -100,7 +99,6 @@ app.get("/:user_id", async (req, res) => {
             max: Number(userDetails.max_height),
           },
           gender: acceptedGendersArray,
-          //QUERY ACCEPTED KID INPUT HERE
           kidsAccepted: Number(userDetails.kids_accepted),
           smokers: userDetails.smokers,
           acceptedDistance: Number(userDetails.accepted_distance),

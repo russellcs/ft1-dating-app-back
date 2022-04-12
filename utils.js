@@ -15,4 +15,15 @@ module.exports = {
     }
     return uniqueId + Date.now();
   },
+
+  formatData: (inputArray) => {
+    
+
+
+
+
+  }
+
+
+
 };
