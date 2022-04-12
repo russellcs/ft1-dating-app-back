@@ -17,7 +17,7 @@ function pConnection(query) {
         console.log(err);
         reject(err);
       }
-
+      console.log("pConnection: ", results); //
       resolve(results);
     });
   });

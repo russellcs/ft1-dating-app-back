@@ -1,7 +1,19 @@
 module.exports = {
+  checkUserAndPassword: function (email, password) {
+    console.log("function called");
+    return `SELECT count(*) AS count, id AS userId FROM users 
+              WHERE email = "${email}" 
+                AND password = "${password}";`;
+  },
+  setUserToken: function (userId, token) {
+    return `INSERT INTO tokens (user_id, token) VALUES ("${userId}", "${token}");`;
+  },
+  checkUserToken: function (token) {
+    return `SELECT user_id AS userId FROM tokens WHERE token = "${token}";`;
+  },
   addNewUser: function (payload) {
     return `INSERT INTO users (email, password) 
-                    VALUES ("${payload.login.email}", "${payload.login.password}")`;
+                    VALUES ("${payload.login.email}", "${payload.login.password}");`;
   },
   setUserPersonalDetails: function (payload, userId) {
     return `INSERT INTO user_details(

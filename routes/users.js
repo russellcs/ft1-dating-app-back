@@ -5,6 +5,7 @@ const pConnection = require("../mysql/connection");
 const fs = require("fs");
 // const sendEmail = require("../email/sIBSDK");
 const sendEmail = require("../email/nodeMailer");
+const utils = require("../utils");
 
 // add new user (email only)
 app.post("/", async (req, res) => {
@@ -59,6 +60,21 @@ app.post("/", async (req, res) => {
   /* queries users
       - log out // This needs it's own table?
 */
+});
+
+app.post("/login", async (req, res) => {
+  const userResult = await pConnection(
+    queries.checkUserAndPassword(req.body.email, req.body.password)
+  );
+
+  if (userResult[0].count > 0) {
+    const token = utils.getUniqueId(128);
+
+    await pConnection(queries.setUserToken(userResult[0].userId, token));
+    res.send({ status: 1, userId: userResult[0].userId, token: token });
+  } else {
+    res.send({ status: 0, error: "Sorry, wrong credentials." });
+  }
 });
 
 //store a selfie
