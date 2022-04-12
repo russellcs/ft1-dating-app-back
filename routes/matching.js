@@ -69,8 +69,6 @@ app.get("/:user_id", async (req, res) => {
             firstName: userDetails.first_name,
             lastName: userDetails.last_name,
           },
-          //   selfie: { image },
-          //QUERY SELFIE
           dob: userDetails.dob,
           //QUERY DOB
           location: {

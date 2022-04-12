@@ -17,7 +17,7 @@ module.exports = {
 	},
 
 	getUserMessages: function (user_id) {
-		return `SELECT content, entry_date
+		return `SELECT content, entry_date, foreign_id AS foreignId
               FROM messages
                 WHERE user_id = ${user_id}
                   ORDER BY entry_date DESC;`;
