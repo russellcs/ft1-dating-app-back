@@ -38,7 +38,7 @@ app.post("/likes", async (req, res) => {
 });
 
 app.get("/:user_id", async (req, res) => {
-  console.log("back end called!");
+  // console.log("back end called!");
   try {
     const personalDetails = await pConnection(
       queriesMatching.pullUserDetails(req.params.user_id)

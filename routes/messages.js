@@ -43,6 +43,7 @@ app.post("/blocked", async (req, res) => {
 
 // pull all messages for a user
 app.get("/", async (req, res) => {
+  console.log("messages route was accessed")
   try {
     const result = await pConnection(
       queriesMessages.getUserMessages(req.userId)
