@@ -10,11 +10,10 @@ const sha256 = require("sha256");
 
 // add new user (email only)
 app.post("/", async (req, res) => {
-  // console.log(req.body);
-
   // sendEmail(req.body.email, "Welcome new user", "Thanks for joining us!"); //commented out to stop email function
 
   try {
+    // hashes the user submitted password for security
     const hashedPassword = sha256(
       req.body.login.password + process.env.HASHSALT
     );
@@ -42,21 +41,21 @@ app.post("/", async (req, res) => {
       queries.setUserPrefHeight(req.body.preferences.height, result.insertId)
     );
     // stores a selfie
-    // let base64Data = req.body.personalDetails.selfie.replace(
-    //   /^data:image\/jpeg;base64,/,
-    //   ""
-    // );
-    // base64Data += base64Data.replace("+", " ");
-    // binaryData = Buffer.from(base64Data, "base64").toString("binary");
+    let base64Data = req.body.personalDetails.selfie.replace(
+      /^data:image\/jpeg;base64,/,
+      ""
+    );
+    base64Data += base64Data.replace("+", " ");
+    binaryData = Buffer.from(base64Data, "base64").toString("binary");
 
-    // fs.writeFile(
-    //   `./userImages/${result.insertId}.jpg`,
-    //   binaryData,
-    //   "binary",
-    //   function (err) {
-    //     console.log(err); // writes out file without error, but it's not a valid image
-    //   }
-    // );
+    fs.writeFile(
+      `./userImages/${result.insertId}.jpg`,
+      binaryData,
+      "binary",
+      function (err) {
+        console.log(err); // writes out file without error, but it's not a valid image
+      }
+    );
 
     res.send({ status: 1 });
   } catch (error) {
@@ -78,16 +77,13 @@ app.post("/login", async (req, res) => {
 
   const userResult = await pConnection(queries.checkUserAndPassword(), params);
 
-  // console.log(queries.checkUserAndPassword());
-  // console.log(params);
-
   if (userResult[0].count > 0) {
     const token = utils.getUniqueId(128);
 
     await pConnection(queries.setUserToken(userResult[0].userId, token));
     res.send({ status: 1, userId: userResult[0].userId, token: token });
   } else {
-    res.send({ status: 0, error: "Sorry, wrong credentials." });
+    res.send({ status: 0 });
   }
 });
 
