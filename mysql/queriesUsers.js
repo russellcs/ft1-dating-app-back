@@ -1,6 +1,5 @@
 module.exports = {
   checkUserAndPassword: function () {
-    console.log("function called");
     return `SELECT count(*) AS count, id AS userId FROM users 
               WHERE email LIKE ? 
                 AND password LIKE ?;`;
