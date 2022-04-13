@@ -11,6 +11,7 @@ app.use(bodyParser.json());
 app.use(cors());
 
 async function validateToken(req, res, next) {
+  console.log(req.headers)
   if (!req.headers.token) {
     res.send({ status: 0, error: "No token sent." });
     return;
