@@ -4,6 +4,7 @@ const queries = require("../mysql/queriesMatching");
 const pConnection = require("../mysql/connection");
 const queriesMatching = require("../mysql/queriesMatching");
 const utils = require("../utils");
+const { getUsersSeenList } = require("../mysql/queriesMatching");
 
 app.post("/seen", async (req, res) => {
   // route adds foreign id to current users seen list
@@ -45,43 +46,37 @@ app.get("/:user_id", async (req, res) => {
       let userDetails = results[i];
 
       //pull preferred genders for each user from DB
+      //loop over results of prefered genders to create formatted array of integers
       const preferredGenders = await pConnection(
         queriesMatching.getPreferredGenders(userDetails.user_id)
       );
 
-      //loop over results of prefered genders to create formatted array of integers
       const preferredGendersArray = [];
       for (let j = 0; j < preferredGenders.length; j++) {
-        preferredGendersArray.push(preferredGenders[j].gender_id);
+        preferredGendersArray.push(preferredGenders[j].genderId);
       }
       
-      
+      //pull likes data for each user from DB
+      //loop over results of likes data to create formatted array of integers
       const likesList = await pConnection(
         queriesMatching.getUsersLikesList(userDetails.user_id)
       );
 
-      const likesListArray = [];
-      for (let j = 0; j < likesList.length; j++) {
-        likesListArray.push(likesList[j].foreign_id);
-      }
+      const likesListArray = utils.formatToIdArray(likesList)
 
-
+      //pull seen data for each user from DB
+      //loop over results of seen data to create formatted array of integers
       const seenList = await pConnection(queriesMatching.getUsersSeenList(userDetails.user_id));
 
-      const seenListArray = [];
-      for (let j=0; j< seenList.length; j++) {
-        seenListArray.push(seenList[j].foreign_id);
-      }
+      const seenListArray = utils.formatToIdArray(seenList)
 
+      //pull blocked data for each user from DB
+      //loop over results of blocked data to create formatted array of integers
       const blockedList = await pConnection(queriesMatching.getUsersBlockedList(userDetails.user_id));
 
-      const blockedListArray =[];
-      for (let j=0; j < blockedList.length; j++) {
-        blockedListArray.push(blockedList[j].foreign_id);
-      }
-     
+      const blockedListArray = utils.formatToIdArray(blockedList)
 
-      //format data into front end structure
+      //format data into front end structure for each user
       const formattedData = {
         userId: userDetails.user_id,
         signUpTimeStamp: userDetails.entry_date,
@@ -135,7 +130,6 @@ app.get("/:user_id", async (req, res) => {
           type: userDetails.type,
           // lastLoginTimestamp: Date.now()
           //QUERY LAST LOGIN
-          //QUERY BLOCKED
         },
       };
 

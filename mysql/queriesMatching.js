@@ -64,7 +64,7 @@ module.exports = {
   getPreferredGenders: function (user_id) {
       // query pulls accepted genders (for preferences) from DB for a specific user
     return `SELECT 
-                gender_id 
+                gender_id AS genderId
             FROM 
                 users_preferences_genders 
             WHERE 
@@ -74,7 +74,7 @@ module.exports = {
   getUsersLikesList: function (user_id) {
     // query pulls seen list for a user from DB for a specific user
   return `SELECT 
-              foreign_id 
+              foreign_id AS foreignId
           FROM 
               likes 
           WHERE 
@@ -84,7 +84,7 @@ module.exports = {
 getUsersBlockedList: function (user_id) {
     // query pulls seen list for a user from DB for a specific user
   return `SELECT 
-              foreign_id 
+              foreign_id AS foreignId
           FROM 
               blocked 
           WHERE 
@@ -94,7 +94,7 @@ getUsersBlockedList: function (user_id) {
 getUsersSeenList: function (user_id) {
     // query pulls seen list for a user from DB for a specific user
   return `SELECT 
-              foreign_id 
+              foreign_id AS foreignId
           FROM 
               seen 
           WHERE 

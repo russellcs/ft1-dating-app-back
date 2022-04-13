@@ -6,6 +6,17 @@ const app = express.Router();
 const queries = require("./mysql/queriesMatching");
 
 module.exports = {
+  // takes pulled data from DB and reformats to clean array of integers
+  formatToIdArray: (list) => {
+    // const list = await pConnection(queriesMatching.nameOfQuery(userDetails.user_id));
+
+    const listArray = [];
+    for (let j = 0; j < list.length; j++) {
+      listArray.push(list[j].foreignId);
+    }
+    return listArray;
+  },
+
   getIndexById: (userId, users) => {
     return users.findIndex((user) => Number(user.userId) === Number(userId));
   },
@@ -23,7 +34,7 @@ module.exports = {
     return uniqueId + Date.now();
   },
 
-  timeConverter:(UNIX_timestamp) => {
+  timeConverter: (UNIX_timestamp) => {
     const a = new Date(UNIX_timestamp);
     var months = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
     var newYear = a.getFullYear();
@@ -32,7 +43,8 @@ module.exports = {
     var time = { year: newYear, months: newMonth, day: newDate };
     // var time = `${newYear}-${newMonth}-${newDate}`;
     return time;
-  }
+  },
 
 
 };
+
