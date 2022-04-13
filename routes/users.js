@@ -83,20 +83,4 @@ app.post("/login", async (req, res) => {
   }
 });
 
-//store a selfie
-// app.post("/selfie", (req, res) => {
-//   let base64Data = req.body.selfie.replace(/^data:image\/jpeg;base64,/, "");
-//   base64Data += base64Data.replace("+", " ");
-//   binaryData = Buffer.from(base64Data, "base64").toString("binary");
-
-//   fs.writeFile(
-//     `./userImages/${req.body.user_id}.jpg`,
-//     binaryData,
-//     "binary",
-//     function (err) {
-//       console.log(err); // writes out file without error, but it's not a valid image
-//     }
-//   );
-// });
-
 module.exports = app;
