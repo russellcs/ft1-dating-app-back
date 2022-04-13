@@ -6,14 +6,19 @@ const fs = require("fs");
 // const sendEmail = require("../email/sIBSDK");
 const sendEmail = require("../email/nodeMailer");
 const utils = require("../utils");
+const sha256 = require("sha256");
 
 // add new user (email only)
 app.post("/", async (req, res) => {
-  console.log(req.body);
+  // console.log(req.body);
 
   // sendEmail(req.body.email, "Welcome new user", "Thanks for joining us!"); //commented out to stop email function
 
   try {
+    const hashedPassword = sha256(
+      req.body.login.password + process.env.HASHSALT
+    );
+    req.body.login.password = hashedPassword;
     //adds to users table
     const result = await pConnection(queries.addNewUser(req.body));
     //sets to personalDetails
@@ -37,24 +42,25 @@ app.post("/", async (req, res) => {
       queries.setUserPrefHeight(req.body.preferences.height, result.insertId)
     );
     // stores a selfie
-    let base64Data = req.body.personalDetails.selfie.replace(
-      /^data:image\/jpeg;base64,/,
-      ""
-    );
-    base64Data += base64Data.replace("+", " ");
-    binaryData = Buffer.from(base64Data, "base64").toString("binary");
+    // let base64Data = req.body.personalDetails.selfie.replace(
+    //   /^data:image\/jpeg;base64,/,
+    //   ""
+    // );
+    // base64Data += base64Data.replace("+", " ");
+    // binaryData = Buffer.from(base64Data, "base64").toString("binary");
 
-    fs.writeFile(
-      `./userImages/${result.insertId}.jpg`,
-      binaryData,
-      "binary",
-      function (err) {
-        console.log(err); // writes out file without error, but it's not a valid image
-      }
-    );
+    // fs.writeFile(
+    //   `./userImages/${result.insertId}.jpg`,
+    //   binaryData,
+    //   "binary",
+    //   function (err) {
+    //     console.log(err); // writes out file without error, but it's not a valid image
+    //   }
+    // );
 
     res.send({ status: 1 });
   } catch (error) {
+    console.log(error);
     res.send({ status: 0, error: "Database refused to insert a new user" });
   }
   /* queries users
@@ -64,14 +70,16 @@ app.post("/", async (req, res) => {
 
 app.post("/login", async (req, res) => {
   //prevent hackers
+  const hashedPassword = sha256(req.body.password + process.env.HASHSALT);
+
   if (req.body.password.includes("%")) res.send("Hack attempt detected!");
 
-  const params = [req.body.email, req.body.password];
+  const params = [req.body.email, hashedPassword];
 
   const userResult = await pConnection(queries.checkUserAndPassword(), params);
 
-  console.log(queries.checkUserAndPassword());
-  console.log(params);
+  // console.log(queries.checkUserAndPassword());
+  // console.log(params);
 
   if (userResult[0].count > 0) {
     const token = utils.getUniqueId(128);
