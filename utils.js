@@ -1,3 +1,10 @@
+const pConnection = require("./mysql/connection");
+const queriesMatching = require("./mysql/queriesMatching");
+
+const express = require("express");
+const app = express.Router();
+const queries = require("./mysql/queriesMatching");
+
 module.exports = {
   getIndexById: (userId, users) => {
     return users.findIndex((user) => Number(user.userId) === Number(userId));
@@ -15,15 +22,6 @@ module.exports = {
     }
     return uniqueId + Date.now();
   },
-
-  formatData: (inputArray) => {
-    
-
-
-
-
-  }
-
 
 
 };
