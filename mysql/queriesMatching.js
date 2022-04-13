@@ -1,19 +1,22 @@
 module.exports = {
   addToSeen: function (user_id, foreign_id) {
-    console.log(user_id);
-
+      // query puts foreign ID and current user ID in seen table in DB
+      // Unique property added to ensure no duplicates
     // `ALTER TABLE seen ADD UNIQUE seen_combination (user_id, foreign_id);``
     return `INSERT IGNORE seen (user_id, foreign_id) 
            VALUES ("${user_id}", "${foreign_id}");`;
   },
 
   addToLikes: function (user_id, foreign_id) {
+      // query puts foreign ID and current user ID in likes table in DB
+      // Unique property added to ensure no duplicates
     // `ALTER TABLE likes ADD UNIQUE likes_combination (user_id, foreign_id);``
     return `INSERT IGNORE likes (user_id, foreign_id) 
            VALUES ("${user_id}", "${foreign_id}");`;
   },
 
   pullUserDetails: function (user_id) {
+      // query pulls data from DB for all users
     return `SELECT
                 user_details.user_id,
                 email,
@@ -58,7 +61,8 @@ module.exports = {
                 ;`;
   },
 
-  getAcceptedGenders: function (user_id) {
+  getPreferredGenders: function (user_id) {
+      // query pulls accepted genders (for preferences) from DB for a specific user
     return `SELECT 
                 gender_id 
             FROM 
@@ -67,7 +71,39 @@ module.exports = {
                 user_id = ${user_id};`;
   },
 
+  getUsersLikesList: function (user_id) {
+    // query pulls seen list for a user from DB for a specific user
+  return `SELECT 
+              foreign_id 
+          FROM 
+              likes 
+          WHERE 
+              user_id = ${user_id};`;
+},
+
+getUsersBlockedList: function (user_id) {
+    // query pulls seen list for a user from DB for a specific user
+  return `SELECT 
+              foreign_id 
+          FROM 
+              blocked 
+          WHERE 
+              user_id = ${user_id};`;
+},
+
+getUsersSeenList: function (user_id) {
+    // query pulls seen list for a user from DB for a specific user
+  return `SELECT 
+              foreign_id 
+          FROM 
+              seen 
+          WHERE 
+              user_id = ${user_id};`;
+},
+
   getGenderName: function (user_id) {
+      // query assigns gender name to gender integer
+      // NOT USED - DELETE
     return `SELECT
                 NAME
             FROM

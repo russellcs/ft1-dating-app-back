@@ -23,5 +23,16 @@ module.exports = {
     return uniqueId + Date.now();
   },
 
+  timeConverter:(UNIX_timestamp) => {
+    const a = new Date(UNIX_timestamp);
+    var months = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
+    var newYear = a.getFullYear();
+    var newMonth = months[a.getMonth()];
+    var newDate = a.getDate();
+    var time = { year: newYear, months: newMonth, day: newDate };
+    // var time = `${newYear}-${newMonth}-${newDate}`;
+    return time;
+  }
+
 
 };
