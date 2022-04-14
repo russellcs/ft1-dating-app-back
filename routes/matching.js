@@ -4,7 +4,6 @@ const queries = require("../mysql/queriesMatching");
 const pConnection = require("../mysql/connection");
 const queriesMatching = require("../mysql/queriesMatching");
 const utils = require("../utils");
-const { getUsersSeenList } = require("../mysql/queriesMatching");
 
 app.post("/seen", async (req, res) => {
   // route adds foreign id to current users seen list
@@ -31,7 +30,7 @@ app.post("/likes", async (req, res) => {
 });
 
 app.get("/:user_id", async (req, res) => {
-  // route pulls all users from DB + reformats
+  // route pulls all users from DB + reformats to front-end structure
 
   // get data for all users
   try {
@@ -94,7 +93,6 @@ app.get("/:user_id", async (req, res) => {
             lastName: userDetails.last_name,
           },
           dob: utils.timeConverter(userDetails.dob),
-          //QUERY DOB
           location: {
             town: userDetails.location_town,
             postCode: userDetails.location_postcode,
