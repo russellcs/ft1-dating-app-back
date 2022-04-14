@@ -94,4 +94,12 @@ module.exports = {
                         "${payload.max}"
                     )`;
   },
+  deleteToken: function (userId) {
+    return `
+    DELETE
+        FROM
+              tokens
+        WHERE
+              user_id = ${userId}`;
+  },
 };
