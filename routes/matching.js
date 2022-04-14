@@ -76,6 +76,14 @@ app.get("/:user_id", async (req, res) => {
 
       const blockedListArray = utils.formatToIdArray(blockedList)
 
+
+      //pull matches data for each user from DB
+      //loop over results of matches data to create formatted array of integers
+      const matchesList = await pConnection(queriesMatching.getMatchesList(userDetails.user_id));
+
+      const matchesListArray = utils.formatToIdArray(matchesList)
+      
+
       //format data into front end structure for each user
       const formattedData = {
         userId: userDetails.user_id,
@@ -120,7 +128,7 @@ app.get("/:user_id", async (req, res) => {
         },
         seen: seenListArray,
         likes: likesListArray,
-        matches: [],
+        matches: matchesListArray,
         blocked: blockedListArray,
         login: {
           email: userDetails.email,

@@ -9,7 +9,6 @@ module.exports = {
   // takes pulled data from DB and reformats to clean array of integers
   formatToIdArray: (list) => {
     // const list = await pConnection(queriesMatching.nameOfQuery(userDetails.user_id));
-
     const listArray = [];
     for (let j = 0; j < list.length; j++) {
       listArray.push(list[j].foreignId);
