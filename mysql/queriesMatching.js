@@ -103,7 +103,7 @@ getUsersSeenList: function (user_id) {
 
 getMatchesList: function (user_id) {
     return `SELECT 
-                likes_left.foreign_id  AS foreignId
+                likes_left.foreign_id AS foreignId
             FROM 
                 likes AS likes_left
             JOIN 

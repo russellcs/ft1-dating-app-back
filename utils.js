@@ -19,8 +19,8 @@ module.exports = {
   getIndexById: (userId, users) => {
     return users.findIndex((user) => Number(user.userId) === Number(userId));
   },
+  
   getUniqueId: (length) => {
-    // return Math.round(Math.random() * 10000000000);
     const now = Date.now().toString();
     let uniqueId = "";
     const chars =
@@ -33,6 +33,7 @@ module.exports = {
     return uniqueId + Date.now();
   },
 
+  // converts unix timstamp to object with year, months and day keys
   timeConverter: (UNIX_timestamp) => {
     const a = new Date(UNIX_timestamp);
     var months = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
@@ -40,7 +41,6 @@ module.exports = {
     var newMonth = months[a.getMonth()];
     var newDate = a.getDate();
     var time = { year: newYear, months: newMonth, day: newDate };
-    // var time = `${newYear}-${newMonth}-${newDate}`;
     return time;
   },
 
