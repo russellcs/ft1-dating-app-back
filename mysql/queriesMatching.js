@@ -101,6 +101,21 @@ getUsersSeenList: function (user_id) {
               user_id = ${user_id};`;
 },
 
+getMatchesList: function (user_id) {
+    return `SELECT 
+                likes_left.foreign_id  AS foreignId
+            FROM 
+                likes AS likes_left
+            JOIN 
+                likes
+            ON 
+                likes_left.foreign_id = likes.user_id 
+            AND 
+                likes_left.user_id = likes.foreign_id
+            WHERE 
+                likes_left.user_id = ${user_id};`
+},
+
   getGenderName: function (user_id) {
       // query assigns gender name to gender integer
       // NOT USED - DELETE
@@ -112,5 +127,7 @@ getUsersSeenList: function (user_id) {
             JOIN genders ON users_preferences_genders.gender_id = genders.id
             WHERE user_id = ${user_id};`;
   },
+
+
 };
 
