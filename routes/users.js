@@ -87,4 +87,13 @@ app.post("/login", async (req, res) => {
   }
 });
 
+app.delete("/logout/:userId", async (req, res) => {
+  try {
+    await pConnection(queries.deleteToken(req.params.userId));
+    res.send({ status: 1 });
+  } catch (error) {
+    res.send({ status: 0 });
+  }
+});
+
 module.exports = app;
