@@ -87,9 +87,9 @@ app.post("/login", async (req, res) => {
   }
 });
 
-app.delete("/logout/:userId", async (req, res) => {
+app.delete("/logout/:token", async (req, res) => {
   try {
-    await pConnection(queries.deleteToken(req.params.userId));
+    await pConnection(queries.deleteToken(req.params.token));
     res.send({ status: 1 });
   } catch (error) {
     res.send({ status: 0 });
