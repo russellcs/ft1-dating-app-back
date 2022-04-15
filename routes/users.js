@@ -7,6 +7,7 @@ const fs = require("fs");
 const sendEmail = require("../email/nodeMailer");
 const utils = require("../utils");
 const sha256 = require("sha256");
+const middleware = require("../middleware")
 
 // add new user (email only)
 app.post("/", async (req, res) => {
@@ -87,7 +88,8 @@ app.post("/login", async (req, res) => {
   }
 });
 
-app.delete("/logout/:token", async (req, res) => {
+app.delete("/logout/:token", middleware.validateToken, async (req, res) => {
+
   try {
     await pConnection(queries.deleteToken(req.params.token));
     res.send({ status: 1 });

@@ -6,7 +6,7 @@ const pConnection = require("../mysql/connection");
 
 // add a message
 app.post("/", async (req, res) => {
-	console.log("req.body:", req.body);
+	// console.log("req.body:", req.body);
 	const { user_id, foreign_id, content } = req.body;
 	try {
 		const result = await pConnection(
@@ -44,7 +44,7 @@ app.post("/blocked", async (req, res) => {
 
 // pull all messages for a user
 app.get("/", async (req, res) => {
-	console.log("messages route was accessed");
+	// console.log("messages route was accessed");
 	try {
 		const result = await pConnection(
 			queriesMessages.getUserMessages(req.userId)
