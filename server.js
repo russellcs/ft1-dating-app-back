@@ -7,6 +7,7 @@ const queries = require("./mysql/queriesUsers");
 const cors = require("cors");
 const bodyParser = require("body-parser");
 const rateLimit = require("express-rate-limit");
+const middleware = require("./middleware")
 
 // code to limit hackers ingress - restricts number of requests allowed per hour
 const limiter = rateLimit({
@@ -24,29 +25,14 @@ app.use(cors());
 app.use("/userImages", express.static("userImages"));
 // go here if someone tries to access static file
 
-async function validateToken(req, res, next) {
-	console.log(req.headers);
-	if (!req.headers.token) {
-		res.send({ status: 0, error: "No token sent." });
-		return;
-	}
-	const results = await pConnection(queries.checkUserToken(req.headers.token));
-	if (results.length) {
-		req.userId = results[0].userId;
-		next();
-	} else {
-		res.send({ status: 0, error: "Sorry, wrong token." });
-	}
-}
-
 // routes
 app.get("/", () => {
 	console.log("The server received a request");
 });
 
 app.use("/users", require("./routes/users"));
-app.use("/messages", validateToken, require("./routes/messages"));
-app.use("/matching", require("./routes/matching"));
+app.use("/messages", middleware.validateToken, require("./routes/messages"));
+app.use("/matching", middleware.validateToken, require("./routes/matching"));
 
 //server on
 const port = process.env.PORT || 6001;
