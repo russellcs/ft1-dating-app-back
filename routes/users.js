@@ -7,7 +7,7 @@ const fs = require("fs");
 const sendEmail = require("../email/nodeMailer");
 const utils = require("../utils");
 const sha256 = require("sha256");
-const middleware = require("../middleware")
+const middleware = require("../middleware");
 
 // add new user (email only)
 app.post("/", async (req, res) => {
@@ -82,6 +82,11 @@ app.post("/login", async (req, res) => {
     const token = utils.getUniqueId(128);
 
     await pConnection(queries.setUserToken(userResult[0].userId, token));
+    //start of testing code
+
+    pConnection(`TRUNCATE TABLE blocked`);
+    pConnection(`TRUNCATE TABLE seen`);
+    //end of testing code
     res.send({ status: 1, userId: userResult[0].userId, token: token });
   } else {
     res.send({ status: 0 });
@@ -89,7 +94,6 @@ app.post("/login", async (req, res) => {
 });
 
 app.delete("/logout/:token", middleware.validateToken, async (req, res) => {
-
   try {
     await pConnection(queries.deleteToken(req.params.token));
     res.send({ status: 1 });
